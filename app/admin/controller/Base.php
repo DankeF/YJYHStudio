@@ -9,12 +9,20 @@
 namespace app\admin\controller;
 
 use think\controller;
-use think\Request;
+use think\session;
+use think\Db;
 
 class Base extends controller
 {
-    public function __construct(Request $request = null)
+    public function _initialize()
     {
-        parent::__construct($request);
+        $where = array(
+            'username' => Session::get('username'),
+            'key' => Session::get('key'),
+        );
+        $isLogin = Db::table('admin')->where($where)->find();
+        if (!$isLogin){
+            $this->success('请先登录!','/admin/Login/login');
+        }
     }
 }

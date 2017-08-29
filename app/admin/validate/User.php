@@ -18,18 +18,18 @@ class User extends Validate {
         ['password','require','密码不能为空,请重新登录！！'],
     ];
 
-    protected function checkLogin(){
-
-        $where = array(
-            'username' => Session::get('username'),
-            'key' => Session::get('key'),
-        );
-        $isLogin = Db::table('admin')->where($where)->find();
-        if ($isLogin){
-            $this->redirect('Index/index');
-        }else{
-            $this->redirect('Login/login');
-        }
-    }
+//    protected function checkLogin(){
+//
+//        $where = array(
+//            'username' => Session::get('username'),
+//            'key' => Session::get('key'),
+//        );
+//        $isLogin = Db::table('admin')->where($where)->find();
+//        if ($isLogin){
+//            $this->redirect('Index/index');
+//        }else{
+//            $this->redirect('Login/login');
+//        }
+//    }
 
 }

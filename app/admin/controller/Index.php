@@ -7,17 +7,20 @@
  */
 namespace app\admin\controller;
 
-use think\Validate;
+use think\Session;
 use think\View;
-use think\controller;
-use app\admin\controller\Login;
+use app\admin\controller;
 
-class Index extends controller{
+class Index extends Base{
     public function index(){
-
-        $validate = new Validate();
 
         $view = new View();
         return $view->fetch();
+    }
+
+    public function loginOut(){
+        Session::set('usename', null);
+        Session::set('key', null);
+        $this->success('已退出，请重新登录!', '/admin/Login/login');
     }
 }

@@ -26,7 +26,7 @@ class Login extends controller{
         );
         $isLogin = Db::table('admin')->where($where)->find();
         if ($isLogin){
-            $this->success('已登录','/admin/Index/index');
+            $this->success('已登录!','/admin/Index/index');
         }
 
         $view = new View();
