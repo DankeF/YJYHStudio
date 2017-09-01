@@ -37,17 +37,14 @@ class Login extends controller{
         if (!empty($_POST)){
 
             $validate = $this->validate($post, 'User');
-
             if (true !== $validate){
                 return $view->fetch('login', ['error' => $validate]);
             }
 
-            $adminRes = Db::table('admin')->where($post)->select();
-
+            $adminRes = Db::table('admin')->where($post)->find();
             if (!empty($adminRes)){
                 Session::set('username', $post['username']);
                 Session::set('key', sha1($post['username']));
-
                 $this->success('登录成功','/admin/Index/index');
             }else{
                 $this->fetch('login', ['error' => '用户名或密码错误！']);

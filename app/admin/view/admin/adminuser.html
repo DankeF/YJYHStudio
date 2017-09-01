@@ -1,0 +1,83 @@
+{include file="/Public/header" /}
+
+{include file="/Public/left" /}
+  <!-- sidebar end -->
+
+  <!-- content start -->
+  <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">个人资料</strong> / <small>Personal information</small></div>
+      </div>
+
+      <hr/>
+
+      <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+          <form class="am-form am-form-horizontal" action="edit" method="post">
+            <div class="am-form-group">
+              <label for="user-name" class="am-u-sm-3 am-form-label">姓名 / UserName</label>
+              <div class="am-u-sm-9">
+                <input type="text" name="username" id="user-name" placeholder="姓名 / UserName" value="{$user.username}">
+                <small>输入你的名字，让我们记住你。</small>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="user-email" class="am-u-sm-3 am-form-label">电子邮件 / Email</label>
+              <div class="am-u-sm-9">
+                <input type="email" name="email" id="user-email" placeholder="输入你的电子邮件 / Email" value="{$user.email}">
+                <small>邮箱你懂得...</small>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="user-phone" class="am-u-sm-3 am-form-label">电话 / Telephone</label>
+              <div class="am-u-sm-9">
+                <input type="tel" name="phone" id="user-phone" placeholder="输入你的电话号码 / Telephone" value="{$user.phone}">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="user-weibo" class="am-u-sm-3 am-form-label">微博 / Weibo</label>
+              <div class="am-u-sm-9">
+                <input type="text" name="weibo" id="user-weibo" placeholder="输入你的微博 / Weibo" value="{$user.weibo}">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label for="user-intro" class="am-u-sm-3 am-form-label">介绍 / Intro</label>
+              <div class="am-u-sm-9">
+                <textarea class="" rows="5" name="intro" id="user-intro" placeholder="输入网站介绍">{$user.intro}</textarea>
+                <small>250字以内写出网站介绍...</small>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <div class="am-u-sm-9 am-u-sm-push-3">
+                <button type="submit" class="am-btn am-btn-primary">保存修改</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <footer class="admin-content-footer">
+      <hr>
+      <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
+    </footer>
+
+  </div>
+  <!-- content end -->
+
+</div>
+
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+<footer>
+  <hr>
+  <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
+</footer>
+
+{include file="/Public/footer" /}
