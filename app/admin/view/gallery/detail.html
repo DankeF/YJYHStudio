@@ -1,0 +1,59 @@
+{include file="/Public/header" /}
+
+{include file="/Public/left" /}
+
+<div class="admin-content">
+    <div class="admin-content-body">
+        <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf">
+                <strong class="am-text-primary am-text-lg">{$gallery[0]['name']}</strong> /
+                <small>Gallery</small>
+            </div>
+        </div>
+
+        <hr/>
+
+        <form id="image">
+            <div>
+                <input type="file" name="image" style="float: left; height: 32px;margin-left: 20px;"/>
+                <input type="button" value="上传" class="am-btn am-btn-primary am-btn-sm am-fl" onclick="upload()"/>
+            </div>
+        </form>
+
+        <br/>
+        <hr/>
+
+        <ul class="am-avg-sm-2 am-avg-md-4 am-avg-lg-6 am-margin gallery-list">
+            {volist name='gallery' id='value'}
+            <li>
+                <input style="visibility: hidden" value="{$value.title_id}"/>
+                <img class="am-img-thumbnail am-img-bdrs" src="/uploads/{$value.path}" alt=""/>
+                <div class="gallery-desc">{$value.add_time|substr=0,10}</div>
+            </li>
+            {/volist}
+        </ul>
+
+    </div>
+</div>
+<script>
+    function upload() {
+        var form = new FormData($("#image")[0]);
+        $.ajax({
+            url: "upload",
+            data: form,
+            type: "post",
+            contentType: false,
+            processData: false,
+            success: function (Res) {
+                if (Res == 1) {
+                    alert("添加成功", history.go(0));
+                }else if (Res == 2){
+                    alert("添加失败");
+                }else {
+                    alert("上传失败");
+                }
+            }
+        });
+    }
+</script>
+{include file="/Public/footer" /}
