@@ -16,6 +16,7 @@
         <form id="image">
             <div>
                 <input type="file" name="image" style="float: left; height: 32px;margin-left: 20px;"/>
+                <input type="text" style="display: none" name="title_id" value="{$gallery_array.0.title_id}"/>
                 <input type="button" value="上传" class="am-btn am-btn-primary am-btn-sm am-fl" onclick="upload()"/>
             </div>
         </form>
@@ -24,13 +25,36 @@
         <hr/>
 
         <ul class="am-avg-sm-2 am-avg-md-4 am-avg-lg-6 am-margin gallery-list">
-            {volist name='gallery' id='value'}
+            {if condition="is_array($gallery_array)"}
+            {volist name='gallery_array' id='value'}
             <li>
                 <input style="visibility: hidden" value="{$value.title_id}"/>
-                <img class="am-img-thumbnail am-img-bdrs" src="/uploads/{$value.path}" alt=""/>
-                <div class="gallery-desc">{$value.add_time|substr=0,10}</div>
+                <img class="am-img-thumbnail am-img-bdrs" src="/uploads/{$value.upload}" alt=""/>
+                <div class="gallery-title">{$value.add_time|substr=0,10}</div>
+                <div class="am-btn-group am-btn-group-xs">
+                    <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
+                            style="background-color: #fff" onclick="del({$value.id})">
+                        <span class="am-icon-trash-o">删除</span>
+                    </button>
+                    {if condition="$value.is_cover == '1'"}
+                    <button class="am-btn am-btn-default am-btn-xs am-text-secondary" style="background-color: #fff"
+                            id="{$value.id}" name="cover"
+                            onclick="cover({$value.id});">
+                        <span class="am-icon-bell">设为相册封面</span>
+                    </button>
+                    {else /}
+                    <button class="am-btn am-btn-default am-btn-xs am-text-success" style="background-color: #fff"
+                            id="{$value.id}" name="cover"
+                            onclick="cover({$value.id});">
+                        <span class="am-icon-bell">取消设为封面</span>
+                    </button>
+                    {/if}
+                </div>
             </li>
             {/volist}
+            {else /}
+            <div>还没有照片，请先上传</div>
+            {/if}
         </ul>
 
     </div>
@@ -47,13 +71,51 @@
             success: function (Res) {
                 if (Res == 1) {
                     alert("添加成功", history.go(0));
-                }else if (Res == 2){
+                } else if (Res == 2) {
                     alert("添加失败");
-                }else {
-                    alert("上传失败");
+                } else {
+                    alert(Res);
                 }
             }
         });
+    }
+
+    function del(id) {
+        if (confirm("确定删除这张照片吗？")) {
+            $.ajax({
+                url: "delete",
+                data: "id=" + id,
+                type: "get",
+                success: function (delRes) {
+                    if (delRes == 1) {
+                        alert(history.go(0));
+                    } else if (delRes == 0) {
+                        alert("删除失败", history.go(0));
+                    }
+                }
+            });
+        }
+    }
+
+    function cover(id) {
+        $.ajax({
+            url: "cover",
+            data: "id=" + id,
+            type: "get",
+            success: function (coverRes) {
+                if (coverRes == 1) {
+                    $("[name=cover]").attr("class", "am-btn am-btn-default am-btn-xs am-text-secondary");
+                    $("#" + id).attr("class", "am-btn am-btn-default am-btn-xs am-text-success");
+                    $("#" + id).html("<span class='am-icon-bell' >取消设为封面</span>")
+                } else if (coverRes == 2) {
+                    $("#" + id).attr("class", "am-btn am-btn-default am-btn-xs am-text-secondary");
+                    $("#" + id).html("<span class='am-icon-bell' >设为相册封面</span>")
+                } else {
+                    alert("设置失败！");
+                }
+            }
+        });
+
     }
 </script>
 {include file="/Public/footer" /}
