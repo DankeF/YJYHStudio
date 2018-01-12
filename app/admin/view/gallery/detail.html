@@ -105,6 +105,7 @@
             success: function (coverRes) {
                 if (coverRes == 1) {
                     $("[name=cover]").attr("class", "am-btn am-btn-default am-btn-xs am-text-secondary");
+                    $(".am-text-secondary").html("<span class='am-icon-bell'>设为相册封面</span>");
                     $("#" + id).attr("class", "am-btn am-btn-default am-btn-xs am-text-success");
                     $("#" + id).html("<span class='am-icon-bell' >取消设为封面</span>")
                 } else if (coverRes == 2) {

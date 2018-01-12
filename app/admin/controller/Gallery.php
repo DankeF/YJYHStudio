@@ -26,10 +26,22 @@ class Gallery extends Base
         $view->assign('title', $title);
 
         $gallery = Db::table('gallery')
-            ->field('title_id,count(title_id) as sum,upload')
-            ->where('is_delete = 1 and is_cover = 2')
+            ->field('title_id,count(title_id) as sum,upload,is_cover')
+            ->where('is_delete = 1')
+            ->group('is_cover')
             ->select();
-        $view->assign('gallery', $gallery);
+        foreach ($title as $value){
+            foreach ($gallery as $item){
+                if ($value['id'] == $item['title_id']){
+                    $data[$value['id']]['title_id'] = $value['id'];
+                    $data[$value['id']]['upload'] = $item['upload'];
+                    $data[$value['id']]['sum'] += $item['sum'];
+                }
+            }
+        }
+//        var_dump($data);die;
+        $view->assign('gallery', $data);
+
         return $view->fetch();
     }
 
