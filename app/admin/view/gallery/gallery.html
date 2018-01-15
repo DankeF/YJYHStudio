@@ -16,31 +16,32 @@
 
       <ul class="am-avg-sm-2 am-avg-md-4 am-avg-lg-6 am-margin gallery-list">
 
-        {if condition="is_array($title)"}
+          {if condition="is_array($title)"}
           {volist name='$title' id='value'}
-            {volist name='$gallery' id='gallery_id'}
-              {if condition="$gallery_id.title_id eq $value.id"}
-                <li>
-                  <a href="detail?id={$value.id}">
-                    <img class="am-img-thumbnail am-img-bdrs" src="/uploads/{$gallery_id.upload}" alt=""/>
-                    <div class="gallery-title">{$value.name}<span style="float: right">count:{$gallery_id.sum}</span></div>
-                    <div class="gallery-desc">{$value.add_time|substr=0,10}</div>
-                  </a>
-                </li>
-              {else /}
-                <li>
-                  <a href="detail?id={$value.id}">
-                    <img class="am-img-thumbnail am-img-bdrs" src="/uploads/{$gallery_id.upload}" alt=""/>
-                    <div class="gallery-title">{$value.name}<span style="float: right">count:0</span></div>
-                    <div class="gallery-desc">{$value.add_time|substr=0,10}</div>
-                  </a>
-                </li>
-              {/if}
-            {/volist}
+          {if condition="!empty($gallery)"}
+          {volist name='$gallery' id='gallery_id'}
+          <li>
+              <a href="detail?id={$value.id}">
+                  <img class="am-img-thumbnail am-img-bdrs" src="/uploads/{$gallery_id.upload}" alt=""/>
+                  <div class="gallery-title">{$value.name}<span style="float: right;margin-right: 30px">count:{$gallery_id.sum}</span></div>
+                  <div class="gallery-desc">{$value.add_time|substr=0,10}</div>
+              </a>
+          </li>
           {/volist}
-        {else /}
+          {else /}
+          <li>
+              <a href="detail?id={$value.id}">
+                  <img class="am-img-thumbnail am-img-bdrs" src="/uploads/bing-2.jpg" alt=""/>
+                  <div class="gallery-title">{$value.name}<span style="float: right">count:0</span></div>
+                  <div class="gallery-desc">{$value.add_time|substr=0,10}</div>
+              </a>
+          </li>
+          {/if}
+          {/volist}
+          {else /}
           <h3>您还没有相册，请先创建相册</h3>
-        {/if}
+          {/if}
+
 
       </ul>
 

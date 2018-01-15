@@ -10,6 +10,7 @@ namespace app\admin\controller;
 
 
 use think\Db;
+use think\Image;
 use think\View;
 use think\File;
 
@@ -30,16 +31,15 @@ class Gallery extends Base
             ->where('is_delete = 1')
             ->group('is_cover')
             ->select();
-        foreach ($title as $value){
-            foreach ($gallery as $item){
-                if ($value['id'] == $item['title_id']){
+        foreach ($title as $value) {
+            foreach ($gallery as $item) {
+                if ($value['id'] == $item['title_id']) {
                     $data[$value['id']]['title_id'] = $value['id'];
                     $data[$value['id']]['upload'] = $item['upload'];
                     $data[$value['id']]['sum'] += $item['sum'];
                 }
             }
         }
-//        var_dump($data);die;
         $view->assign('gallery', $data);
 
         return $view->fetch();
@@ -60,6 +60,7 @@ class Gallery extends Base
             ->alias('g')
             ->where($where)->join('title t', 'g.title_id = t.id')
             ->select();
+        $view->assign('title_id', $get['id']);
         $view->assign('gallery_array', $gallery_array);
         return $view->fetch('detail');
     }
@@ -67,15 +68,24 @@ class Gallery extends Base
     public function upload()
     {
         $post = input('post.');
-
         $file = request()->file('image');
+        $info = $this->validate(['image' => $file], ['image' => 'require|image']);
+        if ($info !== true) {
+            $error = json_decode($this->error('请选择图像文件'),true);
+            echo $error['msg'];
+        } else {
+            $fileName = time();
+            $file = \think\Image::open($file);
+            $imageName = $fileName . '.png';
+            $path = date('Ymd') . DS . $imageName;
+            if (is_dir(ROOT_PATH . 'public/uploads/' . date('Ymd')))
+            {
+                $file->thumb(150, 150, Image::THUMB_SCALING)->save(ROOT_PATH . 'public/uploads/' . $path);
 
-//        dump($error=$_FILES['excelfilename']['error']);
-
-        $info = $file->validate(['size' => 20971520, 'ext' => 'jpg,png,gif'])->move(ROOT_PATH . 'public' . DS . 'uploads');
-
-        if ($info) {
-            $path = $info->getSaveName();
+            }else{
+                mkdir(ROOT_PATH . 'public/uploads/' . date('Ymd'));
+                $file->thumb(150, 150, Image::THUMB_SCALING)->save(ROOT_PATH . 'public/uploads/' . $path);
+            }
             $data = array(
                 "title_id" => $post['title_id'],
                 "upload" => $path,
@@ -87,9 +97,8 @@ class Gallery extends Base
             } else {
                 echo 2;
             }
-        } else {
-            echo $file->getError();
         }
+
     }
 
     public function delete()
@@ -132,7 +141,7 @@ class Gallery extends Base
             } else {
                 echo 0;
             }
-        } elseif ($is_cover['is_cover'] == '2'){
+        } elseif ($is_cover['is_cover'] == '2') {
             $cover = Db::table('gallery')
                 ->where($where)
                 ->update(['is_cover' => '1']);

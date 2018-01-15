@@ -16,7 +16,7 @@
         <form id="image">
             <div>
                 <input type="file" name="image" style="float: left; height: 32px;margin-left: 20px;"/>
-                <input type="text" style="display: none" name="title_id" value="{$gallery_array.0.title_id}"/>
+                <input type="text" style="display: none" name="title_id" value="{$title_id}"/>
                 <input type="button" value="上传" class="am-btn am-btn-primary am-btn-sm am-fl" onclick="upload()"/>
             </div>
         </form>
@@ -74,7 +74,7 @@
                 } else if (Res == 2) {
                     alert("添加失败");
                 } else {
-                    alert(Res);
+                    alert(Res['msg']);
                 }
             }
         });
