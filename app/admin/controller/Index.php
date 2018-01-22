@@ -20,7 +20,9 @@ class Index extends Base
     {
 
         $view = new View();
-        $title = Db::table('title')->select();
+        $title = Db::table('title')
+            ->where('is_delete = 1')
+            ->select();
         $view->assign('title', $title);
         return $view->fetch();
     }

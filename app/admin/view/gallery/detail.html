@@ -6,8 +6,13 @@
     <div class="admin-content-body">
         <div class="am-cf am-padding am-padding-bottom-0">
             <div class="am-fl am-cf">
-                <strong class="am-text-primary am-text-lg">{$gallery[0]['name']}</strong> /
-                <small>Gallery</small>
+                <strong class="am-text-primary am-text-lg">
+                    <ol class="am-breadcrumb">
+                        <li><a href="/admin/index/index">首页</a></li>
+                        <li><a href="/admin/gallery/gallery">相册</a></li>
+                        <li><a href="/admin/gallery/detail?id={$album.id}">{$album.name}</a></li>
+                    </ol>
+                </strong>
             </div>
         </div>
 
@@ -39,13 +44,13 @@
                     {if condition="$value.is_cover == '1'"}
                     <button class="am-btn am-btn-default am-btn-xs am-text-secondary" style="background-color: #fff"
                             id="{$value.id}" name="cover"
-                            onclick="cover({$value.id});">
+                            onclick="cover({$value.id},{$title_id});">
                         <span class="am-icon-bell">设为相册封面</span>
                     </button>
                     {else /}
                     <button class="am-btn am-btn-default am-btn-xs am-text-success" style="background-color: #fff"
                             id="{$value.id}" name="cover"
-                            onclick="cover({$value.id});">
+                            onclick="cover({$value.id},{$title_id});">
                         <span class="am-icon-bell">取消设为封面</span>
                     </button>
                     {/if}
@@ -87,9 +92,9 @@
                 data: "id=" + id,
                 type: "get",
                 success: function (delRes) {
-                    if (delRes == 1) {
-                        alert(history.go(0));
-                    } else if (delRes == 0) {
+                    if (delRes === 1) {
+                        history.go(0);
+                    } else if (delRes === 0) {
                         alert("删除失败", history.go(0));
                     }
                 }
@@ -97,10 +102,10 @@
         }
     }
 
-    function cover(id) {
+    function cover(id, title_id) {
         $.ajax({
             url: "cover",
-            data: "id=" + id,
+            data: "id=" + id + "&title_id=" + title_id,
             type: "get",
             success: function (coverRes) {
                 if (coverRes == 1) {

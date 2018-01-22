@@ -10,6 +10,8 @@
             <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">
                 <ol class="am-breadcrumb">
                     <li><a href="/admin/index/index">首页</a></li>
+                    <li><a href="/admin/recycle/index">回收站</a></li>
+                    <li><a href="/admin/recycle/gallery">相册</a></li>
                 </ol>
             </strong>
             </div>
@@ -27,8 +29,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {if condition="!empty($title)"}
-                    {volist name='title' id='value'}
+                    {if condition="!empty($album)"}
+                    {volist name='album' id='value'}
                     <tr>
                         <td>{$value.id}</td>
                         <td><a href="#">{$value.name}</a></td>
@@ -42,14 +44,16 @@
                                 <ul class="am-dropdown-content" style="min-width: 80px">
                                     <li>
                                         <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
-                                                style="background-color: #0e90d2; color: #fff; width: 80px; border-color: #fff" onclick="link({$value.id})">
-                                            编辑
+                                                style="background-color: #0e90d2; color: #fff; width: 80px; border-color: #fff"
+                                                onclick="restore({$value.id})">
+                                            还原相册
                                         </button>
                                     </li>
                                     <li>
                                         <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
-                                                style="background-color: #dd514c; color: #fff; width: 80px; border-color: #fff" onclick="del({$value.id})">
-                                            删除
+                                                style="background-color: #dd514c; color: #fff; width: 80px; border-color: #fff"
+                                                onclick="del({$value.id})">
+                                            彻底删除
                                         </button>
                                     </li>
                                 </ul>
@@ -81,7 +85,7 @@
     function del(id) {
         if (confirm("确定删除这个相册吗？")) {
             $.ajax({
-                url: "/admin/gallery/delGallery",
+                url: "/admin/recycle/delGallery",
                 data: "id=" + id,
                 type: "get",
                 success: function (delRes) {
@@ -99,8 +103,23 @@
         }
     }
 
-    function link(id) {
-        location.href = '/admin/gallery/detail?id' + id;
+    function restore(id) {
+        $.ajax({
+            url: "/admin/recycle/restore",
+            data: "id=" + id,
+            type: "get",
+            success: function (Res) {
+                if (Res === 1) {
+                    alert("没有这个相册！", history.go(0));
+                } else if (Res === 0) {
+                    alert("相册id不能为空", history.go(0));
+                } else if (Res === 2) {
+                    alert("还原成功", history.go(0));
+                } else if (Res) {
+                    alert("还原失败，换个姿势试试", history.go(0));
+                }
+            }
+        });
     }
 
 </script>
