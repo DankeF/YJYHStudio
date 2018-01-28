@@ -1,100 +1,106 @@
 {include file="/Public/header" /}
+<div class="am-cf admin-main">
+    {include file="/Public/left" /}
+    <!-- sidebar end -->
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf">
+                    <strong class="am-text-primary am-text-lg">
+                        <ol class="am-breadcrumb">
+                            <li><a href="/admin/index/index">首页</a></li>
+                            <li><a href="/admin/gallery/index">相册设置</a></li>
+                            <li><a href="/admin/gallery/gallery">相册</a></li>
+                        </ol>
+                    </strong>
+                    <small>Gallery</small>
+                </div>
+                <div style="float: right">
+                    <button
+                            type="button"
+                            class="am-btn am-btn-success"
+                            id="doc-prompt-toggle">
+                        添加相册
+                    </button>
 
-{include file="/Public/left" /}
-<!-- sidebar end -->
-<!-- content start -->
-<div class="admin-content">
-    <div class="admin-content-body">
-        <div class="am-cf am-padding am-padding-bottom-0">
-            <div class="am-fl am-cf">
-                <strong class="am-text-primary am-text-lg">
-                    <ol class="am-breadcrumb">
-                        <li><a href="/admin/index/index">首页</a></li>
-                        <li><a href="/admin/gallery/index">相册设置</a></li>
-                        <li><a href="/admin/gallery/gallery">相册</a></li>
-                    </ol>
-                </strong>
-                <small>Gallery</small>
-            </div>
-            <div style="float: right">
-                <button
-                        type="button"
-                        class="am-btn am-btn-success"
-                        id="doc-prompt-toggle">
-                    添加相册
-                </button>
-
-                <div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
-                    <div class="am-modal-dialog">
-                        <div class="am-modal-hd">填写信息</div>
-                        <div class="am-modal-bd">
-                            相册名称<input type="text" class="am-modal-prompt-input">
-                        </div>
-                        <div class="am-modal-footer">
-                            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                            <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+                    <div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+                        <div class="am-modal-dialog">
+                            <div class="am-modal-hd">填写信息</div>
+                            <div class="am-modal-bd">
+                                相册名称<input type="text" class="am-modal-prompt-input">
+                            </div>
+                            <div class="am-modal-footer">
+                                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                                <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <hr>
+
+            <ul class="am-avg-sm-2 am-avg-md-4 am-avg-lg-6 am-margin gallery-list">
+
+                {if condition="!empty($title)"}
+                {volist name='$gallery' id='value'}
+                {if condition="!empty($value.sum)"}
+                <li>
+                    <a href="detail?id={$value.id}">
+                        {if condition="!empty($value.upload)"}
+                        <img class="am-img-thumbnail am-img-bdrs" src="/uploads/{$value.upload}" alt=""/>
+                        {else /}
+                        <img class="am-img-thumbnail am-img-bdrs" src="/uploads/bing-2.jpg" alt=""/>
+                        {/if}
+                        <div class="gallery-title">{$value.name}<span style="float: right;margin-right: 30px">count:{$value.sum}</span>
+                        </div>
+                        <div class="gallery-desc">{$value.add_time|substr=0,10}</div>
+                    </a>
+                    <!--<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"-->
+                    <!--style="float: right; background-color: #fff" value="{$value.id}">-->
+                    <input type="button" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
+                           style="background-color: #fff; color: #0a628f; float: right" onclick="edit({$value.id})"
+                           value="编辑">
+                    <!--</button>-->
+                </li>
+                {else /}
+                <li>
+                    <a href="detail?id={$value.id}">
+                        <img class="am-img-thumbnail am-img-bdrs" src="/uploads/bing-2.jpg" alt=""/>
+                        <div class="gallery-title">{$value.name}<span style="float: right">count:0</span></div>
+                        <div class="gallery-desc">{$value.add_time|substr=0,10}</div>
+                    </a>
+                </li>
+                {/if}
+                {/volist}
+                {else /}
+                <h3>您还没有相册，请先创建相册</h3>
+                {/if}
+
+
+            </ul>
+
+            <div class="am-margin am-cf">
+                <hr/>
+                <p class="am-fl">共 15 条记录</p>
+                <ol class="am-pagination am-fr">
+                    <li class="am-disabled"><a href="#">&laquo;</a></li>
+                    <li class="am-active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">&raquo;</a></li>
+                </ol>
+            </div>
         </div>
 
-        <hr>
-
-        <ul class="am-avg-sm-2 am-avg-md-4 am-avg-lg-6 am-margin gallery-list">
-
-            {if condition="!empty($title)"}
-            {volist name='$gallery' id='value'}
-            {if condition="!empty($value.sum)"}
-            <li>
-                <a href="detail?id={$value.id}">
-                    {if condition="!empty($value.upload)"}
-                    <img class="am-img-thumbnail am-img-bdrs" src="/uploads/{$value.upload}" alt=""/>
-                    {else /}
-                    <img class="am-img-thumbnail am-img-bdrs" src="/uploads/bing-2.jpg" alt=""/>
-                    {/if}
-                    <div class="gallery-title">{$value.name}<span style="float: right;margin-right: 30px">count:{$value.sum}</span>
-                    </div>
-                    <div class="gallery-desc">{$value.add_time|substr=0,10}</div>
-                </a>
-            </li>
-            {else /}
-            <li>
-                <a href="detail?id={$value.id}">
-                    <img class="am-img-thumbnail am-img-bdrs" src="/uploads/bing-2.jpg" alt=""/>
-                    <div class="gallery-title">{$value.name}<span style="float: right">count:0</span></div>
-                    <div class="gallery-desc">{$value.add_time|substr=0,10}</div>
-                </a>
-            </li>
-            {/if}
-            {/volist}
-            {else /}
-            <h3>您还没有相册，请先创建相册</h3>
-            {/if}
-
-
-        </ul>
-
-        <div class="am-margin am-cf">
-            <hr/>
-            <p class="am-fl">共 15 条记录</p>
-            <ol class="am-pagination am-fr">
-                <li class="am-disabled"><a href="#">&laquo;</a></li>
-                <li class="am-active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&raquo;</a></li>
-            </ol>
-        </div>
+        <footer class="admin-content-footer">
+            <hr>
+            <p class="am-padding-left">Copyright 2018  <a href="http://xiaoyun.com">云间映画工作室</a>. All Rights Reserved.</p>
+        </footer>
     </div>
-
-    <footer class="admin-content-footer">
-        <hr>
-        <p class="am-padding-left">© 2018 AllMobilize, Inc. Licensed under MIT license.</p>
-    </footer>
-
 </div>
 <!-- content end -->
 
@@ -125,4 +131,26 @@
             });
         });
     });
+
+    function edit(id) {
+        var name = prompt("请输入新相册名", "");
+        if (name) {
+            $.ajax({
+                url: "edit",
+                data: "id=" + id + "&name=" + name,
+                type: "get",
+                success: function (editRes) {
+                    if (editRes === 0) {
+                        alert('相册名称不能为空');
+                    } else if (editRes === 3) {
+                        alert('相册名称重复，请重新修改');
+                    } else if (editRes === 2) {
+                        alert('修改失败，请重试');
+                    } else if (editRes === 1) {
+                        alert('修改成功', history.go(0));
+                    }
+                }
+            });
+        }
+    }
 </script>

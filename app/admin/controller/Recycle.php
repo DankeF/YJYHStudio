@@ -9,19 +9,17 @@
 namespace app\admin\controller;
 
 
-use think\View;
 use think\Db;
 
 class recycle extends Base
 {
     public function Gallery()
     {
-        $view = new View();
         $album = Db::table('title')
             ->where('is_delete=2')
             ->select();
-        $view->assign('album', $album);
-        return $view->fetch();
+        $this->assign('album', $album);
+        return $this->fetch();
     }
 
     //还原相册
@@ -74,18 +72,62 @@ class recycle extends Base
         }
     }
 
-    public function photo(){
-        $view = new View();
+    public function photo()
+    {
 
         $photo = Db::table('gallery')
-            ->where('is_delete=2')
+            ->field('title.name,gallery.add_time,gallery.id,gallery.upload')
+            ->where('gallery.is_delete=2')
+            ->join('title', 'gallery.title_id=title.id')
             ->select();
-
-        $view->assign('photo', $photo);
-        $view->fetch();
+        $this->assign('photo', $photo);
+        return $this->fetch();
     }
 
-    public function restorePhoto(){
+    //还原图片
+    public function restorePhoto()
+    {
+        $get = input('get.');
+        if (empty($get['id'])) {
+            return 0;
+        }
+        $id = $get['id'];
+        $album = Db::table('gallery')
+            ->where("id=$id")
+            ->find();
+        if (empty($album)) {
+            return 1;
+        }
+        $del = Db::table('gallery')
+            ->where("id=$id")
+            ->update(['is_delete' => '1']);
+        if ($del) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
 
+    //彻底删除图片
+    public function delPhoto(){
+        $get = input('get.');
+        if (empty($get['id'])) {
+            return 0;
+        }
+        $id = $get['id'];
+        $photo = Db::table('gallery')
+            ->where("id=$id")
+            ->find();
+        if (empty($photo)) {
+            return 1;
+        }
+        $del = Db::table('gallery')
+            ->where("id=$id")
+            ->delete();
+        if ($del) {
+            return 2;
+        } else {
+            return 3;
+        }
     }
 }

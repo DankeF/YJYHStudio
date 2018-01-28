@@ -8,7 +8,6 @@
 
 namespace app\admin\controller;
 
-use think\view;
 use think\session;
 class User
 {

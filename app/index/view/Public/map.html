@@ -1,0 +1,84 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Lite Map</title>
+    <script type="text/javascript"
+            src="//api.map.baidu.com/api?ak=EVj2gKgkGq7Tk56C8tCGTUhK2pyRdh3Q&type=lite&v=1.0"></script>
+    <style type="text/css">
+        html {
+            height: 500px;
+        }
+
+        body {
+            height: 500px;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #container {
+            height: 500px
+        }
+    </style>
+</head>
+<body>
+<div id="container"
+     style="position: relative; z-index: 0; overflow: hidden; background-color: rgb(245, 243, 240); color: rgb(0, 0, 0); text-align: left;">
+    <div style="position: absolute; overflow: visible; left: 0px; top: 0px; z-index: 0;">
+        <div style="position: absolute; left: 0px; top: 0px; z-index: 10; overflow: hidden; width: 653px; height: 214px;"></div>
+        <div style="position: absolute; z-index: 100; left: 0px; top: 0px; width: 0px; height: 0px;">
+            <div style="position: absolute; z-index: 100; left: 0px; top: 0px; width: 0px; height: 0px;"></div>
+        </div>
+        <div style="position: absolute; left: 0px; top: 0px; z-index: 0;">
+            <div style="position: absolute; left: 0px; top: 0px; z-index: -1; transform: translate(327px, 107px);"><img
+                    src="http://online0.map.bdimg.com/tile/?qt=tile&amp;x=23687&amp;y=7873&amp;z=17&amp;styles=pl&amp;scaler=2&amp;udt=20180125"
+                    style="position: absolute; width: 256px; height: 256px; left: 0px; top: 0px; transform: translate(-178px, -12px);"><img
+                    src="http://online4.map.bdimg.com/tile/?qt=tile&amp;x=23686&amp;y=7873&amp;z=17&amp;styles=pl&amp;scaler=2&amp;udt=20180125"
+                    style="position: absolute; width: 256px; height: 256px; left: 0px; top: 0px; transform: translate(-434px, -12px);"><img
+                    src="http://online1.map.bdimg.com/tile/?qt=tile&amp;x=23688&amp;y=7873&amp;z=17&amp;styles=pl&amp;scaler=2&amp;udt=20180125"
+                    style="position: absolute; width: 256px; height: 256px; left: 0px; top: 0px; transform: translate(78px, -12px);"><img
+                    src="http://online1.map.bdimg.com/tile/?qt=tile&amp;x=23687&amp;y=7874&amp;z=17&amp;styles=pl&amp;scaler=2&amp;udt=20180125"
+                    style="position: absolute; width: 256px; height: 256px; left: 0px; top: 0px; transform: translate(-178px, -268px);"><img
+                    src="http://online0.map.bdimg.com/tile/?qt=tile&amp;x=23686&amp;y=7874&amp;z=17&amp;styles=pl&amp;scaler=2&amp;udt=20180125"
+                    style="position: absolute; width: 256px; height: 256px; left: 0px; top: 0px; transform: translate(-434px, -268px);"><img
+                    src="http://online2.map.bdimg.com/tile/?qt=tile&amp;x=23688&amp;y=7874&amp;z=17&amp;styles=pl&amp;scaler=2&amp;udt=20180125"
+                    style="position: absolute; width: 256px; height: 256px; left: 0px; top: 0px; transform: translate(78px, -268px);">
+            </div>
+        </div>
+    </div>
+    <div style="height: 25px; position: absolute; z-index: 10; bottom: 1px; left: 1px;"><a title="到百度地图查看此区域"
+                                                                                           target="_blank"
+                                                                                           href="http://map.baidu.com/?sr=1"
+                                                                                           style="outline: none;"><img
+            style="border:none;width:68px;height:25px" src="http://api0.map.bdimg.com/images/copyright_logo_hd.png"></a>
+    </div>
+    <div style="box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 2px; background: rgba(255, 255, 255, 0.8); border-radius: 3px; position: absolute; z-index: 10; bottom: 20px; right: 20px;">
+        <div style="width: 36px; height: 42px; text-align: center; line-height: 42px; font-family: arial; color: rgb(0, 0, 0);">
+            <div style="font-size:24px;border-bottom:solid 1px #ccc;-webkit-user-select:none;-moz-user-select:none;user-select:none;pointer-events: none;">
+                +
+            </div>
+        </div>
+        <div style="width: 36px; height: 42px; text-align: center; line-height: 42px; font-family: arial; color: rgb(0, 0, 0);">
+            <div style="font-size:40px;-webkit-user-select:none;-moz-user-select:none;user-select:none;pointer-events:none;">
+                -
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var map = new BMap.Map('container');
+    // 创建地图实例
+    var point = new BMap.Point(108.947398, 34.200106);
+    // 创建点坐标
+    map.centerAndZoom(point, 17);
+    // 初始化地图， 设置中心点坐标和地图级别
+    var zoomCtrl = new BMap.ZoomControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT, offset: new BMap.Size(20, 20)});
+    map.addControl(zoomCtrl);
+    var marker = new BMap.Marker(point);
+    map.addOverlay(marker);
+</script>
+</body>
+</html>

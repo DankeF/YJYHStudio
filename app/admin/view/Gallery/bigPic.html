@@ -1,0 +1,129 @@
+{include file="/Public/header" /}
+<div class="am-cf admin-main">
+    {include file="/Public/left" /}
+
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf">
+                    <strong class="am-text-primary am-text-lg">
+                        <ol class="am-breadcrumb">
+                            <li><a href="/admin/Index/index">首页</a></li>
+                            <li><a href="/admin/Gallery/bigPic">首页大图</a></li>
+                        </ol>
+                    </strong>
+                </div>
+            </div>
+
+            <hr/>
+
+            <form id="image">
+                <div>
+                    <input type="file" name="image" style="float: left; height: 32px;margin-left: 20px;"/>
+                    <input type="text" style="display: none" name="title_id" value="0"/>
+                    <input type="button" value="上传" class="am-btn am-btn-primary am-btn-sm am-fl" onclick="upload()"/>
+                </div>
+            </form>
+
+            <br/>
+            <hr/>
+
+            <ul class="am-avg-sm-2 am-avg-md-4 am-avg-lg-6 am-margin gallery-list">
+                {if condition="!empty($big_pic)"}
+                {volist name='big_pic' id='value'}
+                <li>
+                    <img class="am-img-thumbnail am-img-bdrs" src="/uploads/{$value.upload}" alt=""/>
+                    <div class="gallery-title">{$value.add_time|substr=0,10}</div>
+                    <div class="am-btn-group am-btn-group-xs">
+                        <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
+                                style="background-color: #fff" onclick="del({$value.id})">
+                            <span class="am-icon-trash-o">删除</span>
+                        </button>
+                        {if condition="$value.is_cover == '1'"}
+                        <button class="am-btn am-btn-default am-btn-xs am-text-secondary" style="background-color: #fff"
+                                id="{$value.id}" name="cover"
+                                onclick="cover({$value.id});">
+                            <span class="am-icon-bell">设为首页封面</span>
+                        </button>
+                        {else /}
+                        <button class="am-btn am-btn-default am-btn-xs am-text-success" style="background-color: #fff"
+                                id="{$value.id}" name="cover"
+                                onclick="cover({$value.id});">
+                            <span class="am-icon-bell">取消首页封面</span>
+                        </button>
+                        {/if}
+                    </div>
+                </li>
+                {/volist}
+                {else /}
+                <div>还没有照片，请先上传</div>
+                {/if}
+            </ul>
+        </div>
+        <footer class="admin-content-footer">
+            <hr>
+            <p class="am-padding-left">Copyright 2018  <a href="http://xiaoyun.com">云间映画工作室</a>. All Rights Reserved.</p>
+        </footer>
+    </div>
+</div>
+<script>
+    function upload() {
+        var form = new FormData($("#image")[0]);
+        $.ajax({
+            url: "uploadBig",
+            data: form,
+            type: "post",
+            contentType: false,
+            processData: false,
+            success: function (Res) {
+                if (Res == 1) {
+                    alert("添加成功", history.go(0));
+                } else if (Res == 2) {
+                    alert("添加失败");
+                } else {
+                    alert(Res['msg']);
+                }
+            }
+        });
+    }
+
+    function del(id) {
+        if (confirm("确定删除这张照片吗？")) {
+            $.ajax({
+                url: "delete",
+                data: "id=" + id,
+                type: "get",
+                success: function (delRes) {
+                    if (delRes === 1) {
+                        history.go(0);
+                    } else if (delRes === 0) {
+                        alert("删除失败", history.go(0));
+                    }
+                }
+            });
+        }
+    }
+
+    function cover(id, title_id) {
+        $.ajax({
+            url: "cover",
+            data: "id=" + id + "&title_id=" + title_id,
+            type: "get",
+            success: function (coverRes) {
+                if (coverRes == 1) {
+                    $("[name=cover]").attr("class", "am-btn am-btn-default am-btn-xs am-text-secondary");
+                    $(".am-text-secondary").html("<span class='am-icon-bell'>设为相册封面</span>");
+                    $("#" + id).attr("class", "am-btn am-btn-default am-btn-xs am-text-success");
+                    $("#" + id).html("<span class='am-icon-bell' >取消设为封面</span>")
+                } else if (coverRes == 2) {
+                    $("#" + id).attr("class", "am-btn am-btn-default am-btn-xs am-text-secondary");
+                    $("#" + id).html("<span class='am-icon-bell' >设为相册封面</span>")
+                } else {
+                    alert("设置失败！");
+                }
+            }
+        });
+
+    }
+</script>
+{include file="/Public/footer" /}

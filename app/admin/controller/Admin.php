@@ -9,7 +9,6 @@
 namespace app\admin\controller;
 
 use think\Session;
-use think\View;
 use think\Db;
 
 class Admin extends Base
@@ -17,10 +16,9 @@ class Admin extends Base
 
     public function adminUser()
     {
-        $view = new View();
         $adminUser = Db::table('admin')->find();
-        $view->assign('user', $adminUser);
-        return $view->fetch();
+        $this->assign('user', $adminUser);
+        return $this->fetch();
     }
 
     public function edit()
@@ -47,9 +45,8 @@ class Admin extends Base
 
     public function password()
     {
-        $view = new View();
 
-        return $view->fetch();
+        return $this->fetch();
     }
 
     public function passedit()

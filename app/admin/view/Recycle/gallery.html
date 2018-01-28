@@ -1,5 +1,5 @@
 {include file="/Public/header" /}
-
+<div class="am-cf admin-main">
 {include file="/Public/left" /}
 <!-- sidebar end -->
 
@@ -10,7 +10,7 @@
             <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">
                 <ol class="am-breadcrumb">
                     <li><a href="/admin/index/index">首页</a></li>
-                    <li><a href="/admin/recycle/index">回收站</a></li>
+                    <li>回收站</li>
                     <li><a href="/admin/recycle/gallery">相册</a></li>
                 </ol>
             </strong>
@@ -63,7 +63,7 @@
                     {/volist}
                     {else /}
                     <tr>
-                        <td style="background-color:#ffffff;border-top:0px"><h3>您还没有相册，请先创建相册</h3></td>
+                        <td style="background-color:#ffffff;border-top:0px"><h3>没有被删除的相册</h3></td>
                     </tr>
                     {/if}
                     </tbody>
@@ -74,7 +74,7 @@
 
     <footer class="admin-content-footer">
         <hr>
-        <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
+        <p class="am-padding-left">Copyright 2018  <a href="http://xiaoyun.com">云间映画工作室</a>. All Rights Reserved.</p>
     </footer>
 </div>
 <!-- content end -->

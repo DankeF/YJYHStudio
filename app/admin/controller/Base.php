@@ -9,8 +9,10 @@
 namespace app\admin\controller;
 
 use think\controller;
+use think\Request;
 use think\session;
 use think\Db;
+use think\View;
 
 class Base extends controller
 {
@@ -24,5 +26,12 @@ class Base extends controller
         if (!$isLogin){
             $this->success('请先登录!','/admin/Login/login');
         }
+    }
+
+    public function __construct(Request $request = null)
+    {
+        parent::__construct($request);
+
+        $this->view = new View();
     }
 }

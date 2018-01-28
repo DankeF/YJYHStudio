@@ -1,0 +1,91 @@
+{include file="/Public/header" /}
+<div class="am-cf admin-main">
+    {include file="/Public/left" /}
+
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf">
+                    <strong class="am-text-primary am-text-lg">
+                        <ol class="am-breadcrumb">
+                            <li><a href="/admin/index/index">首页</a></li>
+                            <li>回收站</li>
+                            <li><a href="/admin/Recycle/photo">照片</a></li>
+                        </ol>
+                    </strong>
+                </div>
+            </div>
+
+            <ul class="am-avg-sm-2 am-avg-md-4 am-avg-lg-6 am-margin gallery-list">
+                {if condition="!empty($photo)"}
+                {volist name='photo' id='value'}
+                <li>
+                    <input style="visibility: hidden" value="{$value.title_id}"/>
+                    <img class="am-img-thumbnail am-img-bdrs" src="/uploads/{$value.upload}" alt=""/>
+                    <div class="gallery-title">{$value.add_time|substr=0,10}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{$value.name}</span>
+                    </div>
+                    <div class="am-btn-group am-btn-group-xs" style="float: right">
+                        <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
+                                style="background-color: #fff" onclick="recycle({$value.id})">
+                            <span class="am-icon-reply" style="color: #1fb5f6">还原</span>
+                        </button>
+                        <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
+                                style="background-color: #fff" onclick="del({$value.id})">
+                            <span class="am-icon-close">删除</span>
+                        </button>
+                    </div>
+                </li>
+                {/volist}
+                {else /}
+                <div>没有被删除的照片</div>
+                {/if}
+            </ul>
+
+        </div>
+        <footer class="admin-content-footer">
+            <hr>
+            <p class="am-padding-left">Copyright 2018  <a href="http://xiaoyun.com">云间映画工作室</a>. All Rights Reserved.</p>
+        </footer>
+    </div>
+</div>
+{include file="/Public/footer" /}
+<script>
+    function del(id) {
+        if (confirm("确定删除这张照片吗？")) {
+            $.ajax({
+                url: "/admin/recycle/delPhoto",
+                data: "id=" + id,
+                type: "get",
+                success: function (delRes) {
+                    if (delRes === 1) {
+                        alert("没有这个相册！", history.go(0));
+                    } else if (delRes === 0) {
+                        alert("相册id不能为空", history.go(0));
+                    } else if (delRes === 2) {
+                        alert("删除成功", history.go(0));
+                    } else if (delRes) {
+                        alert("删除失败，换个姿势试试", history.go(0));
+                    }
+                }
+            });
+        }
+    }
+    function recycle(id) {
+        $.ajax({
+            url: "/admin/recycle/restorePhoto",
+            data: "id=" + id,
+            type: "get",
+            success: function (Res) {
+                if (Res === 1) {
+                    alert("没有这个照片！", history.go(0));
+                } else if (Res === 0) {
+                    alert("照片id不能为空", history.go(0));
+                } else if (Res === 2) {
+                    alert("还原成功", history.go(0));
+                } else if (Res) {
+                    alert("还原失败，换个姿势试试", history.go(0));
+                }
+            }
+        });
+    }
+</script>

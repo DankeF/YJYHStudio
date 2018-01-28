@@ -1,106 +1,112 @@
 {include file="/Public/header" /}
+<div class="am-cf admin-main">
+    {include file="/Public/left" /}
+    <!-- sidebar end -->
 
-{include file="/Public/left" /}
-<!-- sidebar end -->
-
-<!-- content start -->
-<div class="admin-content">
-    <div class="admin-content-body">
-        <div class="am-cf am-padding">
-            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">
-                <ol class="am-breadcrumb">
-                    <li><a href="/admin/index/index">首页</a></li>
-                </ol>
-            </strong>
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">
+                    <ol class="am-breadcrumb">
+                        <li><a href="/admin/index/index">首页</a></li>
+                    </ol>
+                </strong>
+                </div>
+            </div>
+            <div class="am-g">
+                <div class="am-u-sm-12">
+                    <table class="am-table am-table-bd am-table-striped admin-content-table" style="text-align: center">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">ID</th>
+                            <th style="text-align: center">相册</th>
+                            <th style="text-align: center">照片数</th>
+                            <th style="text-align: center">创建日期</th>
+                            <th style="text-align: center">点击量</th>
+                            <th style="text-align: center">管理</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {if condition="!empty($title)"}
+                        {volist name='title' id='value'}
+                        <tr>
+                            <td>{$value.id}</td>
+                            <td><a href="/admin/Gallery/detail?id={$value.id}">{$value.name}</a></td>
+                            <td>{$value.sum}</td>
+                            <td style="width: 200px">{$value.add_time|substr=0,10}</td>
+                            <td><span>{$value.check_num}</span></td>
+                            <td>
+                                <div class="am-dropdown" data-am-dropdown>
+                                    <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle"
+                                            data-am-dropdown-toggle><span class="am-icon-cog"></span> <span
+                                            class="am-icon-caret-down"></span></button>
+                                    <ul class="am-dropdown-content" style="min-width: 80px">
+                                        <li>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
+                                                    style="background-color: #0e90d2; color: #fff; width: 80px; border-color: #fff"
+                                                    onclick="link({$value.id})">
+                                                编辑
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
+                                                    style="background-color: #dd514c; color: #fff; width: 80px; border-color: #fff"
+                                                    onclick="del({$value.id})">
+                                                删除
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        {/volist}
+                        {else /}
+                        <tr>
+                            <td style="background-color:#ffffff;border-top:0px"><h3>您还没有相册，请先创建相册</h3></td>
+                        </tr>
+                        {/if}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <div class="am-g">
-            <div class="am-u-sm-12">
-                <table class="am-table am-table-bd am-table-striped admin-content-table">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>相册</th>
-                        <th>创建日期</th>
-                        <th>点击量</th>
-                        <th>管理</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {if condition="!empty($title)"}
-                    {volist name='title' id='value'}
-                    <tr>
-                        <td>{$value.id}</td>
-                        <td><a href="#">{$value.name}</a></td>
-                        <td>{$value.add_time|substr=0,10}</td>
-                        <td><span class="am-badge am-badge-success">{$value.check_num}</span></td>
-                        <td>
-                            <div class="am-dropdown" data-am-dropdown>
-                                <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle"
-                                        data-am-dropdown-toggle><span class="am-icon-cog"></span> <span
-                                        class="am-icon-caret-down"></span></button>
-                                <ul class="am-dropdown-content" style="min-width: 80px">
-                                    <li>
-                                        <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
-                                                style="background-color: #0e90d2; color: #fff; width: 80px; border-color: #fff" onclick="link({$value.id})">
-                                            编辑
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
-                                                style="background-color: #dd514c; color: #fff; width: 80px; border-color: #fff" onclick="del({$value.id})">
-                                            删除
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    {/volist}
-                    {else /}
-                    <tr>
-                        <td style="background-color:#ffffff;border-top:0px"><h3>您还没有相册，请先创建相册</h3></td>
-                    </tr>
-                    {/if}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+
+        <footer class="admin-content-footer">
+            <hr>
+            <p class="am-padding-left">Copyright 2018  <a href="http://xiaoyun.com">云间映画工作室</a>. All Rights Reserved.</p>
+        </footer>
     </div>
+    <!-- content end -->
 
-    <footer class="admin-content-footer">
-        <hr>
-        <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
-    </footer>
-</div>
-<!-- content end -->
+    {include file="/Public/footer" /}
 
-{include file="/Public/footer" /}
-
-<script>
-    function del(id) {
-        if (confirm("确定删除这个相册吗？")) {
-            $.ajax({
-                url: "/admin/gallery/delGallery",
-                data: "id=" + id,
-                type: "get",
-                success: function (delRes) {
-                    if (delRes === 1) {
-                        alert("没有这个相册！", history.go(0));
-                    } else if (delRes === 0) {
-                        alert("相册id不能为空", history.go(0));
-                    } else if (delRes === 2) {
-                        alert("删除成功", history.go(0));
-                    } else if (delRes) {
-                        alert("删除失败，换个姿势试试", history.go(0));
+    <script>
+        function del(id) {
+            if (confirm("确定删除这个相册吗？")) {
+                $.ajax({
+                    url: "/admin/gallery/delGallery",
+                    data: "id=" + id,
+                    type: "get",
+                    success: function (delRes) {
+                        if (delRes === 1) {
+                            alert("没有这个相册！", history.go(0));
+                        } else if (delRes === 0) {
+                            alert("相册id不能为空", history.go(0));
+                        } else if (delRes === 2) {
+                            alert("删除成功", history.go(0));
+                        } else if (delRes === 4) {
+                            alert("这个相册里面还有照片，请先删除相册里面的照片在删除相册",history.go(0));
+                        } else if (delRes) {
+                            alert("删除失败，换个姿势试试", history.go(0));
+                        }
                     }
-                }
-            });
+                });
+            }
         }
-    }
 
-    function link(id) {
-        location.href = '/admin/gallery/detail?id=' + id;
-    }
+        function link(id) {
+            location.href = '/admin/gallery/detail?id=' + id;
+        }
 
-</script>
+    </script>
