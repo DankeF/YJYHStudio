@@ -36,7 +36,7 @@ class Admin extends Base
         $editRes = Db::table('admin')->where('id = 1')->update($update);
 
         if ($editRes !== false) {
-            $this->success('修改成功!', '/admin/Index/index');
+            $this->redirect('/admin/Index/index');
         } else {
             $this->error('修改失败，请重试！');
         }

@@ -11,9 +11,11 @@ namespace app\admin\controller;
 
 use think\Db;
 use think\Image;
+use think\Request;
 
 class Gallery extends Base
 {
+
     //相册展示页
     public function gallery()
     {
@@ -160,7 +162,7 @@ class Gallery extends Base
     public function upload()
     {
         $post = input('post.');
-        $file = request()->file('image');
+        $file = request()->file("image");
         $info = $this->validate(['image' => $file], ['image' => 'require|image']);
         if ($info !== true) {
             $error = json_decode($this->error('请选择图像文件'), true);
