@@ -297,7 +297,7 @@ class Gallery extends Base
                 "is_cover" => '2',
                 "add_time" => date("Y-m-d H:i:s"),
             );
-            Db::table('gallery')->where('title_id=0')->update('is_cover=1');
+            $row = Db::table('gallery')->where('title_id=0')->update(['is_cover'=>'1']);
             $add_image = Db::table('gallery')->insert($data);
             if ($add_image) {
                 return 1;

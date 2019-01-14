@@ -25,19 +25,21 @@
 		<div id="fh5co-about-section">
 			<div class="container">
 				<div class="row">
+                    {volist name='$userInfo' id='value'}
 					<div class="col-md-8 col-md-offset-2 text-center animate-box">
 						<div class="about">
 							<img src="/static/Index/images/Head.jpg" alt="">
 						</div>
 						<div class="desc">
-							<h3>肖云</h3>
-							<p>摄影师，喜欢画画</p>
+							<h3>{$value.username}</h3>
+							<p>{$value.intro}</p>
 							<p class="fh5co-social-icon">
-								<a href="#"><i class="icon-instagram"></i></a>
-								<a href="#"><i class="icon-sina-weibo"></i></a>
+								<a href="https://www.instagram.com/xiaoyunxiansheng/" target="_blank"><i class="icon-instagram"></i></a>
+								<a href="{$value.weibo}" target="_blank"><i class="icon-sina-weibo"></i></a>
 							</p>
 						</div>
 					</div>
+                    {/volist}
 				</div>
 			</div>
 		</div>
@@ -54,7 +56,7 @@
 				<div class="row text-center">
 					<div class="col-md-4 animate-box">
 						<a href="#" class="grid-photo" style="background-image: url(/static/index/images/pic7.jpg);">
-							<div class="desc">
+							<div class="desc" style="active {color: transparent}">
 								<h3>Camera</h3>
 								<span>12 Photos</span>
 							</div>

@@ -8,10 +8,14 @@
 
 namespace app\index\controller;
 
-
+use think\Db;
 class About extends Base
 {
     public function index(){
+
+        $user_info = Db::table('admin')->select();
+
+        $this->assign('userInfo', $user_info);
         return $this->fetch();
     }
 }
